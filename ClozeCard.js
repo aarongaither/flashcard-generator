@@ -10,19 +10,20 @@ function ClozeCard (text, cloze) {
     }
 }
 
-ClozeCard.prototype = {
-    isValid (text, cloze) {
-        if (~text.indexOf(cloze)){
-            return true;
-        } else {
-            console.log(`Invalid card properties: '${text}' does not contain '${cloze}'.`);
-            return false;
-        }
-    },
-    getPartial (text, cloze) {
+ClozeCard.prototype.isValid = function (text, cloze) {
+    if (~text.indexOf(cloze)){
+        return true;
+    } else {
+        console.log(`Invalid card properties: '${text}' does not contain '${cloze}'.`);
+        return false;
+    }
+}
+
+ClozeCard.prototype.getPartial = function (text, cloze) {
         return text.replace(cloze, '...');
-    },
-    logIt() {
+}
+
+ClozeCard.prototype.logIt = function () {
         console.log(`Partial: ${this.partial} | Cloze: ${this.cloze}`)
     }
 };
