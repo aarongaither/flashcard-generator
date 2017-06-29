@@ -10,22 +10,22 @@ function singleCard (text, cloze) {
     }
 }
 
-singleCard.prototype.isValid = function (text, cloze) {
-    if (~text.indexOf(cloze)){
-        return true;
-    } else {
-        console.log(`Invalid card properties: '${text}' does not contain '${cloze}'.`);
-        return false;
-    }
-};
-
-singleCard.prototype.getPartial = function (text, cloze) {
+Object.assign(singleCard.prototype, {
+    isValid(text, cloze) {
+        if (~text.indexOf(cloze)){
+            return true;
+        } else {
+            console.log(`Invalid card properties: '${text}' does not contain '${cloze}'.`);
+            return false;
+        }
+    },
+    getPartial (text, cloze) {
         return text.replace(cloze, '...');
-};
-
-singleCard.prototype.logIt = function () {
+    },
+    logIt() {
         console.log(`Partial: ${this.partial} | Cloze: ${this.cloze}`);
-};
+    }
+})
 
 function generator (arr) {
     return arr.map(elem => {return new singleCard(...elem);})
