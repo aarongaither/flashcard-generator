@@ -1,14 +1,21 @@
-function BasicCard (front, back) {
-	if (this instanceof BasicCard){
+function singleCard (front, back) {
+	if (this instanceof singleCard){
 		this.front = front;
 		this.back = back;
 	} else {
-		return new BasicCard(front, back);
+		return new singleCard(front, back);
 	}
 }
 
-BasicCard.prototype.logIt = function(){
+singleCard.prototype.logIt = function(){
 	    console.log(`Front: ${this.front} | Back: ${this.back}`)
 };
 
-module.exports = BasicCard;
+function generator (arr) {
+	return arr.map(elem => {return new singleCard(...elem);})
+}
+
+module.exports = {
+	singleCard,
+	generator
+};

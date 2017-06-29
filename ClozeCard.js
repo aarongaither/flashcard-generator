@@ -1,16 +1,16 @@
-function ClozeCard (text, cloze) {
-    if (this instanceof ClozeCard){ 
+function singleCard (text, cloze) {
+    if (this instanceof singleCard){ 
         if (this.isValid(text, cloze)) {
             this.fullText = text;
             this.cloze = cloze;
             this.partial = this.getPartial(text, cloze);
         }
     } else {
-        return new ClozeCard(text, cloze);
+        return new singleCard(text, cloze);
     }
 }
 
-ClozeCard.prototype.isValid = function (text, cloze) {
+singleCard.prototype.isValid = function (text, cloze) {
     if (~text.indexOf(cloze)){
         return true;
     } else {
@@ -19,12 +19,19 @@ ClozeCard.prototype.isValid = function (text, cloze) {
     }
 };
 
-ClozeCard.prototype.getPartial = function (text, cloze) {
+singleCard.prototype.getPartial = function (text, cloze) {
         return text.replace(cloze, '...');
 };
 
-ClozeCard.prototype.logIt = function () {
+singleCard.prototype.logIt = function () {
         console.log(`Partial: ${this.partial} | Cloze: ${this.cloze}`);
 };
 
-module.exports = ClozeCard;
+function generator (arr) {
+    return arr.map(elem => {return new singleCard(...elem);})
+}
+
+module.exports = {
+    singleCard,
+    generator
+};
