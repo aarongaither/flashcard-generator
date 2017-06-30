@@ -2,9 +2,34 @@ let BasicCard = require('./BasicCard');
 let ClozeCard = require('./ClozeCard');
 let ClassCard = require('./FlashCardClass');
 
-console.log('');
+//tests from homework
+console.log('Tests from assignment.')
+let firstPresident = new BasicCard.singleCard(
+    "Who was the first president of the United States?", "George Washington");
+
+// "Who was the first president of the United States?"
+console.log(firstPresident.front); 
+
+// "George Washington"
+console.log(firstPresident.back); 
+
+let firstPresidentCloze = new ClozeCard.singleCard(
+    "George Washington was the first president of the United States.", "George Washington");
+
+// "George Washington"
+console.log(firstPresidentCloze.cloze); 
+
+// " ... was the first president of the United States.
+console.log(firstPresidentCloze.partial);
+
+// "George Washington was the first president of the United States.
+console.log(firstPresidentCloze.fullText);
+
+// Should throw or log an error because "oops" doesn't appear in "This doesn't work"
+let brokenCloze = new ClozeCard.singleCard("This doesn't work", "oops");
+
 // test basic cards
-console.log('Basic Test');
+console.log('\nBasic Test');
 [
     ['frontText1', 'backText1'],
     ['frontText2', 'backText2'],
@@ -12,10 +37,9 @@ console.log('Basic Test');
 ].map(elem => {
     return new BasicCard.singleCard(...elem);
 }).forEach(elem => elem.logIt());
-console.log('');
 
 // test cloze cards, last two should log error during instantiation
-console.log('Cloze Test');
+console.log('\nCloze Test');
 [
     ['this is example cloze text.', 'cloze'],
     ['Arnav is the best TA.', 'Arnav'],
@@ -25,22 +49,17 @@ console.log('Cloze Test');
 ].map(elem => {
     return new ClozeCard.singleCard(...elem);
 }).forEach(elem => elem.logIt());
-console.log('');
 
-//check scope safe
-console.log('Scope Test');
-let basicWithoutNew = BasicCard.singleCard('What keyword was omitted?', 'new');
-basicWithoutNew.logIt();
+// scope safe checks (except class, obv)
+console.log('\nScope Test');
+BasicCard.singleCard('What keyword was omitted?', 'new').logIt();
+ClozeCard.singleCard('This was missing the new keyword.', 'new').logIt();
 
-let clozeWithoutNew = ClozeCard.singleCard('This was missing the new keyword.', 'new');
-clozeWithoutNew.logIt();
-
-let basicClassTest = new ClassCard.BasicCard('Class Front', 'Class Back');
-basicClassTest.logIt();
-console.log('')
+console.log('\nClass Test')
+new ClassCard.BasicCard('Class Front', 'Class Back').logIt();
 
 //test generator method for basic module
-console.log('Generator Tests')
+console.log('\nGenerator Tests')
 console.log('Basic')
 let genTestArrayBasic = [
     ['frontText4', 'backText4'],
@@ -48,16 +67,14 @@ let genTestArrayBasic = [
     ['frontText6', 'backText6']
 ];
 
-let generatedBasic = BasicCard.generator(genTestArrayBasic);
-generatedBasic.forEach(elem => elem.logIt());
+BasicCard.generator(genTestArrayBasic).forEach(elem => elem.logIt());
 
 //test generator method for cloze module
-console.log('Cloze')
+console.log('\nCloze')
 let genTestArrayCloze = [
     ['This is example text.', 'example'],
     ['This is another example text', 'another'],
     ['This is yet another example text', 'text']
 ];
 
-let generatedCloze = ClozeCard.generator(genTestArrayCloze);
-generatedCloze.forEach(elem => elem.logIt());
+ClozeCard.generator(genTestArrayCloze).forEach(elem => elem.logIt());
